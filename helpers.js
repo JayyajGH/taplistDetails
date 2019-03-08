@@ -38,6 +38,8 @@ function returnBeverageDetails ($, el) {
       beverageDetails.ABV = getBeverageABV($, beverageStyleAndABV);
       beverageDetails.IBU = getBeverageIBU($, beverageStyleAndABV);
       beverageDetails.SRM = getBeverageSRM($, beverageStyleAndABV);
+      beverageDetails.OG = getBeverageGravity($, beverageStyleAndABV, 'OG:');
+      beverageDetails.FG = getBeverageGravity($, beverageStyleAndABV, 'FG:');
     }
   }
 
@@ -134,6 +136,22 @@ function getBeverageSRM ($, beverageStyleAndABV) {
   });
 
   return beverageSRM;
+}
+
+function getBeverageGravity ($, beverageStyleAndABV, gravityType) {
+  let beverageGravity = 'Unknown';
+
+  beverageStyleAndABV.find('li').each((i,el) => {
+    if(el) {
+      const beverageGravityText=$(el).text();
+      if (beverageGravityText && (beverageGravityText.substring(0,3) === gravityType)) {
+        beverageGravity = beverageGravityText.substring(4).trim();
+        return beverageGravity;
+      }
+    }
+  });
+
+  return beverageGravity;
 }
 
 module.exports = {
