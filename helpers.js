@@ -54,61 +54,83 @@ function returnBeverageDetails ($, el) {
 function getBreweryName (beverageNameAndBreweryElement) {
   let breweryName = 'Unknown';
 
-  const breweryNameElement = beverageNameAndBreweryElement.find('small');
-  if (breweryNameElement) {
-    breweryName = breweryNameElement.text().substring(3).trim();
+  try {
+    const breweryNameElement = beverageNameAndBreweryElement.find('small');
+    if (breweryNameElement) {
+      breweryName = breweryNameElement.text().substring(3).trim();
+    }
   }
-
-  return breweryName;
+  catch (e) {
+    console.log('Brewery name could not be found');
+  }
+  finally {
+    return breweryName;
+  }
 }
 
 function getBeverageName (beverageNameAndBreweryElement) {
   let beverageName = 'Unknown';
 
-  let overallName = beverageNameAndBreweryElement.html();
-  if (overallName) {
-    var pos = overallName.indexOf('<small>');
-    beverageName = overallName.substring(3, pos).trim();
+  try {
+    let overallName = beverageNameAndBreweryElement.html();
+    if (overallName) {
+      var pos = overallName.indexOf('<small>');
+      beverageName = overallName.substring(3, pos).trim();
+    }
   }
-
-  return beverageName;
+  catch (e) {
+    console.log('Beverage name could not be found');
+  }
+  finally {
+    return beverageName;
+  }
 }
 
 function getBeverageStyle ($, beverageStyleAndABV) {
   let beverageStyle = 'Unknown';
 
-  beverageStyleAndABV.find('li').each((i,el) => {
-    if(el) {
-      const beverageText=$(el).text();
-      if (beverageText &&
-          (!beverageText.startsWith('ABV:')) &&
-          (!beverageText.startsWith('IBU:')) &&
-          (!beverageText.startsWith('OG:')) &&
-          (!beverageText.startsWith('FG:')) &&
-          (!beverageText.startsWith('SRM:'))) {
-        beverageStyle = beverageText.trim();
-        return beverageStyle;
+  try {
+    beverageStyleAndABV.find('li').each((i,el) => {
+      if(el) {
+        const beverageText=$(el).text();
+        if (beverageText &&
+            (!beverageText.startsWith('ABV:')) &&
+            (!beverageText.startsWith('IBU:')) &&
+            (!beverageText.startsWith('OG:')) &&
+            (!beverageText.startsWith('FG:')) &&
+            (!beverageText.startsWith('SRM:'))) {
+          beverageStyle = beverageText.trim();
+        }
       }
-    }
-  });
-
-  return beverageStyle;
+    });
+  }
+  catch (e) {
+    console.log('Style could not be found');
+  }
+  finally {
+    return beverageStyle;
+  }
 }
 
 function getBeverageInfo ($, beverageStyleAndABV, type) {
   let beverageDetails = 'Unknown';
 
-  beverageStyleAndABV.find('li').each((i,el) => {
-    if(el) {
-      const beverageDetailsText=$(el).text();
-      if (beverageDetailsText && (beverageDetailsText.startsWith(type))) {
-        beverageDetails = beverageDetailsText.substring(type.length).trim();
-        return beverageDetails;
+  try {
+    beverageStyleAndABV.find('li').each((i,el) => {
+      if(el) {
+        const beverageDetailsText=$(el).text();
+        if (beverageDetailsText && (beverageDetailsText.startsWith(type))) {
+          beverageDetails = beverageDetailsText.substring(type.length).trim();
+        }
       }
-    }
-  });
-
-  return beverageDetails;
+    });
+  }
+  catch(e) {
+    console.log(type + ' could not be found');
+  }
+  finally {
+    return beverageDetails;
+  }
 }
 
 module.exports = {
