@@ -1,0 +1,24 @@
+{
+  "name": "taplist",
+  "version": "1.0.0",
+  "description": "Retrieve details from Taplist.io for a specific venue",
+  "main": "handler.js",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "cheerio": "^1.0.0-rc.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JayyajGH/taplist.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JayyajGH/taplist/issues"
+  },
+  "homepage": "https://github.com/JayyajGH/taplist#readme"
+}
