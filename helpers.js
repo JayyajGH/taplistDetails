@@ -41,6 +41,11 @@ function returnBeverageDetails ($, el) {
       beverageDetails.OG = getBeverageGravity($, beverageStyleAndABV, 'OG:');
       beverageDetails.FG = getBeverageGravity($, beverageStyleAndABV, 'FG:');
     }
+
+    const beverageDescription = beverageDetailsElement.find('p');
+    if (beverageDescription) {
+      beverageDetails.description = beverageDescription.text();
+    }
   }
 
   return beverageDetails;
