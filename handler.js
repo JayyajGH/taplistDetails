@@ -13,7 +13,7 @@ module.exports.gettaplist = (event, context, callback) => {
   request(taplistURL)
     .then(({data}) => {
       const taplistDetails = extractListingsFromHTML(data);
-      console.log('Getting taplist details for ' + taplistDetails.venue + venueID);
+      console.log('Getting taplist details for ' + taplistDetails.venue + ' (' + venueID + ')');
       callback(null, {taplistDetails});
     })
     .catch(function(error) {
