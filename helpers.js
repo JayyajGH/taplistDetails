@@ -35,9 +35,9 @@ function returnBeverageDetails ($, el) {
     const beverageStyleAndABV = beverageDetailsElement.find('ul');
     if (beverageStyleAndABV) {
       beverageDetails.beverageStyle = getBeverageStyle($, beverageStyleAndABV);
-      beverageDetails.ABV = getBeverageABV($, beverageStyleAndABV);
-      beverageDetails.IBU = getBeverageIBU($, beverageStyleAndABV);
-      beverageDetails.SRM = getBeverageSRM($, beverageStyleAndABV);
+      beverageDetails.ABV = getBeverageABVIBUSRM($, beverageStyleAndABV, 'ABV:');
+      beverageDetails.IBU = getBeverageABVIBUSRM($, beverageStyleAndABV, 'IBU:');
+      beverageDetails.SRM = getBeverageABVIBUSRM($, beverageStyleAndABV, 'SRM:');
       beverageDetails.OG = getBeverageGravity($, beverageStyleAndABV, 'OG:');
       beverageDetails.FG = getBeverageGravity($, beverageStyleAndABV, 'FG:');
     }
@@ -90,52 +90,20 @@ function getBeverageStyle ($, beverageStyleAndABV) {
   return beverageStyle;
 }
 
-function getBeverageABV ($, beverageStyleAndABV) {
-  let beverageABV = 'Unknown';
+function getBeverageABVIBUSRM ($, beverageStyleAndABV, type) {
+  let beverageDetails = 'Unknown';
 
   beverageStyleAndABV.find('li').each((i,el) => {
     if(el) {
-      const beverageABVText=$(el).text();
-      if (beverageABVText && (beverageABVText.substring(0,4) === 'ABV:')) {
-        beverageABV = beverageABVText.substring(4).trim();
-        return beverageABV;
+      const beverageDetailsText=$(el).text();
+      if (beverageDetailsText && (beverageDetailsText.substring(0,4) === type)) {
+        beverageDetails = beverageDetailsText.substring(4).trim();
+        return beverageDetails;
       }
     }
   });
 
-  return beverageABV;
-}
-
-function getBeverageIBU ($, beverageStyleAndABV) {
-  let beverageIBU = 'Unknown';
-
-  beverageStyleAndABV.find('li').each((i,el) => {
-    if(el) {
-      const beverageIBUText=$(el).text();
-      if (beverageIBUText && (beverageIBUText.substring(0,4) === 'IBU:')) {
-        beverageIBU = beverageIBUText.substring(4).trim();
-        return beverageIBU;
-      }
-    }
-  });
-
-  return beverageIBU;
-}
-
-function getBeverageSRM ($, beverageStyleAndABV) {
-  let beverageSRM = 'Unknown';
-
-  beverageStyleAndABV.find('li').each((i,el) => {
-    if(el) {
-      const beverageSRMText=$(el).text();
-      if (beverageSRMText && (beverageSRMText.substring(0,4) === 'SRM:')) {
-        beverageSRM = beverageSRMText.substring(4).trim();
-        return beverageSRM;
-      }
-    }
-  });
-
-  return beverageSRM;
+  return beverageDetails;
 }
 
 function getBeverageGravity ($, beverageStyleAndABV, gravityType) {
