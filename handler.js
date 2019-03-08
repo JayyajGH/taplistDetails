@@ -17,7 +17,7 @@ module.exports.gettaplist = (event, context, callback) => {
       callback(null, {taplistDetails});
     })
     .catch(function(error) {
-      if(error.response.status === 404) {
+      if(error.response && error.response.status === 404) {
         callback(new Error('That venue doesn\'t appear to exist'));
       }
       else {
