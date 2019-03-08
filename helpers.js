@@ -68,10 +68,15 @@ function getBeverageName (beverageNameAndBreweryElement) {
 function getBeverageStyle ($, beverageStyleAndABV) {
   let beverageStyle = 'Unknown';
 
-  const beverageStyleElement = beverageStyleAndABV.find('li').get(0);
-  if (beverageStyleElement) {
-    beverageStyle = $(beverageStyleElement).text().trim();
-  }
+  beverageStyleAndABV.find('li').each((i,el) => {
+    if(el) {
+      const beverageText=$(el).text();
+      if (beverageText && (beverageText.substring(0,4) != 'ABV:')) {
+        beverageStyle = beverageText.trim();
+        return beverageStyle;
+      }
+    }
+  });
 
   return beverageStyle;
 }
@@ -82,7 +87,7 @@ function getBeverageABV ($, beverageStyleAndABV) {
   beverageStyleAndABV.find('li').each((i,el) => {
     if(el) {
       const beverageABVText=$(el).text();
-      if (beverageABVText && (beverageABVText.substring(0,3) === 'ABV')) {
+      if (beverageABVText && (beverageABVText.substring(0,4) === 'ABV:')) {
         beverageABV = beverageABVText.substring(4).trim();
         return beverageABV;
       }
