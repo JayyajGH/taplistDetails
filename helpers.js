@@ -37,6 +37,7 @@ function returnBeverageDetails ($, el) {
       beverageDetails.beverageStyle = getBeverageStyle($, beverageStyleAndABV);
       beverageDetails.ABV = getBeverageABV($, beverageStyleAndABV);
       beverageDetails.IBU = getBeverageIBU($, beverageStyleAndABV);
+      beverageDetails.SRM = getBeverageSRM($, beverageStyleAndABV);
     }
   }
 
@@ -72,7 +73,12 @@ function getBeverageStyle ($, beverageStyleAndABV) {
   beverageStyleAndABV.find('li').each((i,el) => {
     if(el) {
       const beverageText=$(el).text();
-      if (beverageText && (beverageText.substring(0,4) != 'ABV:') && (beverageText.substring(0,4) != 'IBU:')) {
+      if (beverageText &&
+          (beverageText.substring(0,4) != 'ABV:') &&
+          (beverageText.substring(0,4) != 'IBU:') &&
+          (beverageText.substring(0,3) != 'OG:') &&
+          (beverageText.substring(0,3) != 'FG:') &&
+          (beverageText.substring(0,4) != 'SRM:') ) {
         beverageStyle = beverageText.trim();
         return beverageStyle;
       }
@@ -112,6 +118,22 @@ function getBeverageIBU ($, beverageStyleAndABV) {
   });
 
   return beverageIBU;
+}
+
+function getBeverageSRM ($, beverageStyleAndABV) {
+  let beverageSRM = 'Unknown';
+
+  beverageStyleAndABV.find('li').each((i,el) => {
+    if(el) {
+      const beverageSRMText=$(el).text();
+      if (beverageSRMText && (beverageSRMText.substring(0,4) === 'SRM:')) {
+        beverageSRM = beverageSRMText.substring(4).trim();
+        return beverageSRM;
+      }
+    }
+  });
+
+  return beverageSRM;
 }
 
 module.exports = {
