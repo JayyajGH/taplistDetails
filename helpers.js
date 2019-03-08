@@ -81,11 +81,11 @@ function getBeverageStyle ($, beverageStyleAndABV) {
     if(el) {
       const beverageText=$(el).text();
       if (beverageText &&
-          (beverageText.substring(0,4) != 'ABV:') &&
-          (beverageText.substring(0,4) != 'IBU:') &&
-          (beverageText.substring(0,3) != 'OG:') &&
-          (beverageText.substring(0,3) != 'FG:') &&
-          (beverageText.substring(0,4) != 'SRM:') ) {
+          (!beverageText.startsWith('ABV:')) &&
+          (!beverageText.startsWith('IBU:')) &&
+          (!beverageText.startsWith('OG:')) &&
+          (!beverageText.startsWith('FG:')) &&
+          (!beverageText.startsWith('SRM:'))) {
         beverageStyle = beverageText.trim();
         return beverageStyle;
       }
@@ -101,7 +101,7 @@ function getBeverageABVIBUSRM ($, beverageStyleAndABV, type) {
   beverageStyleAndABV.find('li').each((i,el) => {
     if(el) {
       const beverageDetailsText=$(el).text();
-      if (beverageDetailsText && (beverageDetailsText.substring(0,4) === type)) {
+      if (beverageDetailsText && (beverageDetailsText.startsWith(type))) {
         beverageDetails = beverageDetailsText.substring(4).trim();
         return beverageDetails;
       }
@@ -117,7 +117,7 @@ function getBeverageGravity ($, beverageStyleAndABV, gravityType) {
   beverageStyleAndABV.find('li').each((i,el) => {
     if(el) {
       const beverageGravityText=$(el).text();
-      if (beverageGravityText && (beverageGravityText.substring(0,3) === gravityType)) {
+      if (beverageGravityText && (beverageGravityText.startsWith(gravityType))) {
         beverageGravity = beverageGravityText.substring(4).trim();
         return beverageGravity;
       }
