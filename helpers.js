@@ -35,11 +35,11 @@ function returnBeverageDetails ($, el) {
     const beverageStyleAndABV = beverageDetailsElement.find('ul');
     if (beverageStyleAndABV) {
       beverageDetails.beverageStyle = getBeverageStyle($, beverageStyleAndABV);
-      beverageDetails.ABV = getBeverageABVIBUSRM($, beverageStyleAndABV, 'ABV:');
-      beverageDetails.IBU = getBeverageABVIBUSRM($, beverageStyleAndABV, 'IBU:');
-      beverageDetails.SRM = getBeverageABVIBUSRM($, beverageStyleAndABV, 'SRM:');
-      beverageDetails.OG = getBeverageGravity($, beverageStyleAndABV, 'OG:');
-      beverageDetails.FG = getBeverageGravity($, beverageStyleAndABV, 'FG:');
+      beverageDetails.ABV = getBeverageInfo($, beverageStyleAndABV, 'ABV:');
+      beverageDetails.IBU = getBeverageInfo($, beverageStyleAndABV, 'IBU:');
+      beverageDetails.SRM = getBeverageInfo($, beverageStyleAndABV, 'SRM:');
+      beverageDetails.OG = getBeverageInfo($, beverageStyleAndABV, 'OG:');
+      beverageDetails.FG = getBeverageInfo($, beverageStyleAndABV, 'FG:');
     }
 
     const beverageDescription = beverageDetailsElement.find('p');
@@ -95,36 +95,20 @@ function getBeverageStyle ($, beverageStyleAndABV) {
   return beverageStyle;
 }
 
-function getBeverageABVIBUSRM ($, beverageStyleAndABV, type) {
+function getBeverageInfo ($, beverageStyleAndABV, type) {
   let beverageDetails = 'Unknown';
 
   beverageStyleAndABV.find('li').each((i,el) => {
     if(el) {
       const beverageDetailsText=$(el).text();
       if (beverageDetailsText && (beverageDetailsText.startsWith(type))) {
-        beverageDetails = beverageDetailsText.substring(4).trim();
+        beverageDetails = beverageDetailsText.substring(type.length).trim();
         return beverageDetails;
       }
     }
   });
 
   return beverageDetails;
-}
-
-function getBeverageGravity ($, beverageStyleAndABV, gravityType) {
-  let beverageGravity = 'Unknown';
-
-  beverageStyleAndABV.find('li').each((i,el) => {
-    if(el) {
-      const beverageGravityText=$(el).text();
-      if (beverageGravityText && (beverageGravityText.startsWith(gravityType))) {
-        beverageGravity = beverageGravityText.substring(4).trim();
-        return beverageGravity;
-      }
-    }
-  });
-
-  return beverageGravity;
 }
 
 module.exports = {
