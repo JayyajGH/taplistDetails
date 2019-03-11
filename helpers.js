@@ -7,7 +7,7 @@ function extractListingsFromHTML (html) {
   const beverageList = [];
 
   // Get the venue
-  taplistDetails.venue = $('.font-primary').text().trim();
+  taplistDetails.venue = $('.font-primary').text().trim() || 'Unknown';
 
   // Loop through each beverage and scrape the details
   const taplistRows = $('table tbody tr');
@@ -54,6 +54,10 @@ function returnBeverageDetails ($, el) {
 function getBreweryName (beverageNameAndBreweryElement) {
   let breweryName = 'Unknown';
 
+  if (!beverageNameAndBreweryElement) {
+    return beverageDetails;
+  }
+
   try {
     const breweryNameElement = beverageNameAndBreweryElement.find('small');
     if (breweryNameElement) {
@@ -70,6 +74,10 @@ function getBreweryName (beverageNameAndBreweryElement) {
 
 function getBeverageName (beverageNameAndBreweryElement) {
   let beverageName = 'Unknown';
+
+  if (!beverageNameAndBreweryElement) {
+    return beverageDetails;
+  }
 
   try {
     let overallName = beverageNameAndBreweryElement.html();
@@ -88,6 +96,10 @@ function getBeverageName (beverageNameAndBreweryElement) {
 
 function getBeverageStyle ($, beverageStyleAndABV) {
   let beverageStyle = 'Unknown';
+
+  if (!beverageStyleAndABV) {
+    return beverageDetails;
+  }
 
   try {
     beverageStyleAndABV.find('li').each((i,el) => {
@@ -114,6 +126,10 @@ function getBeverageStyle ($, beverageStyleAndABV) {
 
 function getBeverageInfo ($, beverageStyleAndABV, type) {
   let beverageDetails = 'Unknown';
+
+  if (!beverageStyleAndABV || !type) {
+    return beverageDetails;
+  }
 
   try {
     beverageStyleAndABV.find('li').each((i,el) => {
