@@ -4,7 +4,7 @@
   "description": "Retrieve details from Taplist.io for a specific venue",
   "main": "handler.js",
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "cheerio": "^1.0.0-rc.2"
   },
   "devDependencies": {},
